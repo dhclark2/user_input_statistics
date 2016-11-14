@@ -16,9 +16,10 @@ name = gets.chomp
 
 
 inputs = []
+variance = []
+average = []
 entries = 0
 summation = 0
-average = 0
 
 loop do
   puts "Enter an integer. Enter nothing to end."
@@ -26,10 +27,12 @@ loop do
 
 	if input_from_user == ""
     break
+  #elsif Float(input_from_user) ==
+
 	else
     entries = entries + 1
-    inputs << input_from_user.to_i
-    summation = summation + input_from_user.to_i
+    inputs << input_from_user.to_f
+    summation = summation + input_from_user.to_f
 # Have to add the to_i method here instead of at beinning of loop because the if statement is looking for a string.  If the input is already seen as a number, then it will never see a ""-string input.  Thus the loop will go forever
 
   end
@@ -41,6 +44,13 @@ if entries == 0
 
 else
   average = summation/entries
+  # inputs.map {|i| i .. ...}  allows me to perform mathematical operations on each number in the arrary by whatever comes after the "|i| i".  Below, a new array is created using Operation 1 which subtracts the average from each input. Operation 2 squares each value in the new array from operation 1.
+  var_each = ((inputs.map {|i| i - average}))
+  variance = var_each.map {|i| i ** 2}
+  # inject(:+) adds up array.  inject(:*) would multiply values in array.
+  variance_avg = (variance.inject(:+)/entries)
+  # to use sqrt I have to tell Ruby to look in the methods under Math.
+  stan_dev = Math.sqrt(variance_avg)
 
   puts "Your name is #{name} and your inputs were #{inputs}"
 
@@ -50,6 +60,8 @@ else
         puts "You made #{entries} inputs"
         puts "The summation of your inputs is #{summation}: "
         puts "The average of your inputs is #{average}: "
+        puts "The variance of of your inputs is #{variance_avg}: "
+        puts "The standard deviation of your inputs is #{stan_dev}: "
       else
         puts "End of Program"
       end
